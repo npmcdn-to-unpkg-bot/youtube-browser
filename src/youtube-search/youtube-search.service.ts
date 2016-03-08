@@ -1,4 +1,5 @@
 import {YouTubeSearchResult} from './youtube-search-result';
+import {YouTubeSearchComponent} from './youtube-search.component';
 import {Injectable} from 'angular2/core';
 
 //declare the gapi variable to avoid TypeScript compilation errors
@@ -12,12 +13,15 @@ export class YouTubeSearchService {
 
   //Procedure to perform a YouTube Search
   //Returns: Promise<YouTubeSearchResult[]>
-  search(query:string) {
+  search(parent:YouTubeSearchComponent) {
+
+    this.results = [];
 
     //build the search request
     var request = gapi.client.youtube.search.list({
-      q: query,
-      part: 'snippet'
+      q: parent.query,
+      part: 'snippet',
+      pageToken: parent.pageToken
     });
 
     console.log(request);
@@ -33,9 +37,13 @@ export class YouTubeSearchService {
       request.execute(function(response) {
         console.log(response);
 
+        parent.nextPageToken = response.nextPageToken;
+        parent.prevPageToken = response.prevPageToken;
+        console.log(parent);
+
         //for each item received..
         response.items.forEach(function(result, index, array) {
-          console.log(result);
+          //console.log(result);
 
           //create a new YouTubeSearchResult
           var r:YouTubeSearchResult = {
@@ -60,7 +68,7 @@ export class YouTubeSearchService {
             }
           };
 
-          console.log(r);
+          //console.log(r);
 
           //...and push it to this.results (through local results variable)
           results.push(r);

@@ -15,6 +15,5 @@ body {
   float:right;
 }
 
-a#search-prev, a#search-next { display:none; cursor:pointer; }
-a#search-next { float:right; }
+a#search-prev, a#search-next { cursor:pointer; }
 
