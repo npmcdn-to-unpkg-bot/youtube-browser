@@ -2,8 +2,6 @@ import {Component} from 'angular2/core';
 import {YouTubeSearchResult} from './youtube-search-result';
 import {YouTubeSearchService} from './youtube-search.service';
 
-declare var gapi : any;
-
 @Component({
   selector: 'youtube-search',
   template: `
