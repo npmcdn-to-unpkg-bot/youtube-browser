@@ -1,19 +1,18 @@
 import {Component} from 'angular2/core';
-import {YouTubeVideo} from './youtubevideo';
-import {YouTubeSearchComponent} from './youtube-search.component';
+import {YouTubeSearchComponent} from './youtube-search/youtube-search.component';
 
 declare var gapi : any;
 
 @Component({
   selector: 'youtube-browser',
-  template:`
+  template: `
     <h1>{{title}}</h1>
     <youtube-search></youtube-search>
   `,
   directives: [YouTubeSearchComponent]
 })
 
-export class AppComponent {
+export class App {
   public title = 'YouTube Browser';
   
   //Google Browser API Key
