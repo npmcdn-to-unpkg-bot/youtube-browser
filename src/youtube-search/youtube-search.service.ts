@@ -17,12 +17,32 @@ export class YouTubeSearchService {
 
     this.results = [];
 
-    //build the search request
-    var request = gapi.client.youtube.search.list({
-      q: parent.query,
+    //Define search parameters
+    var searchParams = { 
       part: 'snippet',
-      pageToken: parent.pageToken
-    });
+      type: 'video',
+      q: parent.query
+    };
+
+    //additional parameters
+    if (parent.pageToken) { searchParams['pageToken'] = parent.pageToken; }
+    if (parent.orderBy != '') { searchParams['order'] = parent.orderBy; }
+
+    //verify that the location is a valid latitude/longitude tuple before setting the search parameter
+    if (parent.isValidLocation()) { 
+      searchParams['location'] = parent.geolocation;
+    
+      //only check/add the radius parameter if the location is specified
+      if (parent.radius.match(/[0-9]+(m|km|ft|mi)/)) {
+        searchParams['locationRadius'] = parent.radius;
+      }
+      else if (parent.radius != '') { parent._displayError('Invalid radius'); }
+    }
+    else if (parent.geolocation != '') { parent._displayError('Invalid location'); }
+
+
+    //build the search request
+    var request = gapi.client.youtube.search.list(searchParams);
 
     console.log(request);
 
@@ -36,6 +56,11 @@ export class YouTubeSearchService {
       //execute the request
       request.execute(function(response) {
         console.log(response);
+
+        if (response.code && response.code != 200) {
+            parent._displayError(response.code + ' - ' + response.message);
+            return [];
+        }
 
         parent.nextPageToken = response.nextPageToken;
         parent.prevPageToken = response.prevPageToken;

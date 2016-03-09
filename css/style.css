@@ -1,6 +1,6 @@
 body {
-  padding: 50px;
-  font: 14px Arial, Helvetica, sans-serif;
+  padding: 25px;
+  font: 12px Arial, Helvetica, sans-serif;
 }
 
 #error {
@@ -14,6 +14,4 @@ body {
 .right {
   float:right;
 }
-
-a#search-prev, a#search-next { cursor:pointer; }
 

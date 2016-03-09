@@ -1,0 +1,41 @@
+<dl class="search-params">
+  <dt><label for="query">Query:</label></dt>
+  <dd><input id="query" type="text" placeholder="Search Keywords" [(ngModel)]="query" /></dd>
+  <dt><label for="location">Location:</label></dt>
+  <dd>
+    <input id="location" type="text" placeholder="lat,long" [(ngModel)]="geolocation" />
+    <button id="my-location" (click)="getLocation()">Use my location</button>
+    <span *ngIf="isValidLocation()">valid location</span>
+    <span *ngIf="!isValidLocation()">invalid location</span>
+  </dd>
+  <dt><label for="radius">Radius:</label></dt>
+  <dd><input id="radius" type="text" placeholder="4mi" [(ngModel)]="radius" /></dd>
+  <dt><label for="order">Sort by:</label></dt>
+  <dd>
+    <select name="order" (change)="orderBy = $event.target.value">
+      <option value="relevance">Relevance</option>
+      <option value="date">Date</option>
+      <option value="rating">Rating</option>
+      <option value=""></option>
+    </select>
+  </dd>
+  <dt></dt>
+  <dd><button id="search-button" (click)="performSearch()">Search</button></dd>
+</dl>
+<div id="error">{{errorMessage}}</div>
+<div *ngIf="working">Searching...</div>
+<ul class="search-list">
+  <li *ngFor="#result of searchResults"
+    [class.selected]="result === selectedVideo"
+    (click)="onSelect(result)">
+    <img src="{{result.thumbnails.medium.url}}" class="thumbnail">
+    <div class="info">
+      <h4>{{result.title}}</h4>
+      <span class="description">{{result.description}}</span>
+    </div>
+  </li>
+</ul>
+<div id="search-nav">
+  <a id="search-prev" *ngIf="prevPageToken" (click)="performSearch(prevPageToken)">Previous</a>
+  <a id="search-next" *ngIf="nextPageToken" (click)="performSearch(nextPageToken)">Next</a>
+</div>

@@ -9,6 +9,7 @@ declare var gapi : any;
     <h1>{{title}}</h1>
     <youtube-search></youtube-search>
   `,
+  styleUrls: ['src/app.css'],
   directives: [YouTubeSearchComponent]
 })
 
