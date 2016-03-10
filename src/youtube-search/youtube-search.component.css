@@ -1,11 +1,7 @@
-.selected {
-  background-color: #CFD8DC !important;
-  color: white;
-}
 .search-list {
   margin: 0 0 2em 0;
   list-style-type: none;
-  padding: 5px;
+  padding: 0;
   width: 100%;
 }
 .search-list li {
@@ -13,7 +9,7 @@
   left: 0;
   background-color: #DDD;
   margin: .5em;
-  padding: 3px;
+  padding: .3em;
   border-radius: 4px;
   min-height: 80px;
 }
@@ -22,6 +18,10 @@
 }
 .search-list li:hover {
   background-color: #EEE;
+}
+.search-list .selected {
+  background-color: #CFD8DC !important;
+  color: white;
 }
 .search-list img.thumbnail {
   position:absolute;
@@ -32,6 +32,26 @@
 .search-list div.info {
   margin-left: 120px;
   margin-top: -10px;
+}
+.search-params {
+  border: 1px solid;
+  padding: 5px;
+}
+.search-params .success {
+  color: green;
+}
+.search-params .error {
+  color: red;
+}
+input.error {
+  background: rgba(0,0,0,0);
+  border:0px;
+  padding-top:2em;
+}
+.status {
+    padding: 20px;
+    text-align: center;
+    border: 1px solid;
 }
 
 #search-nav {

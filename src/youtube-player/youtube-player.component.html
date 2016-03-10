@@ -1,0 +1,11 @@
+<div id="player" class="modal">
+  <div>
+    <div *ngIf="selectedVideo">
+      <h4>{{selectedVideo.title}}</h4>
+    </div>
+    <div *ngIf="!selectedVideo" class="error">
+      A problem occurred retrieving the video
+    </div>
+    <a (click)="back()">Back to Search Results</a>
+  </div>
+</div>

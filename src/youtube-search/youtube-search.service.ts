@@ -1,6 +1,8 @@
-import {YouTubeSearchResult} from './youtube-search-result';
-import {YouTubeSearchComponent} from './youtube-search.component';
-import {Injectable} from 'angular2/core';
+//Angular stuff
+import { Injectable } from 'angular2/core';
+//My stuff
+import { YouTubeSearchResult } from './youtube-search-result';
+import { YouTubeSearchComponent } from './youtube-search.component';
 
 //declare the gapi variable to avoid TypeScript compilation errors
 declare var gapi : any;
@@ -101,7 +103,19 @@ export class YouTubeSearchService {
 
         //after all of the items received have been added to the array, return it via the Promise.resolve() function
         resolve(results);
+        
+        //delay results to simulate slow network
+        //setTimeout(() => resolve(results), 2000)
       });
     });
+  }
+  
+  //Procedure to get information about a specific video
+  //Returns: Promise<YouTubeSearchResult>
+  getVideo(videoId:string) {
+    console.log('Retrieving video ' + videoId);
+    return Promise.resolve(this.results).then(
+      results => results.filter(result => result.videoId === videoId)[0]
+      );
   }
 }

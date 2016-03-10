@@ -1,1 +1,9 @@
+h1 {
+  background:lightslategray;
+  padding: .5em;
+}
 
+h1 > a {
+  text-decoration:none;
+  color:white;
+}

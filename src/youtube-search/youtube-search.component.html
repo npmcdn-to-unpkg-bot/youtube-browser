@@ -1,3 +1,4 @@
+<h2>Search</h2>
 <dl class="search-params">
   <dt><label for="query">Query:</label></dt>
   <dd><input id="query" type="text" placeholder="Search Keywords" [(ngModel)]="query" /></dd>
@@ -5,11 +6,16 @@
   <dd>
     <input id="location" type="text" placeholder="lat,long" [(ngModel)]="geolocation" />
     <button id="my-location" (click)="getLocation()">Use my location</button>
-    <span *ngIf="isValidLocation()">valid location</span>
-    <span *ngIf="!isValidLocation()">invalid location</span>
+    <span class="success" *ngIf="isValidLocation()">Valid location</span>
+    <span class="error" *ngIf="geolocation != '' && !isValidLocation()">Invalid location</span>
   </dd>
   <dt><label for="radius">Radius:</label></dt>
-  <dd><input id="radius" type="text" placeholder="4mi" [(ngModel)]="radius" /></dd>
+  <dd>
+    <input id="radius" type="text" placeholder="4mi" [(ngModel)]="radius" />
+    <!--Show a "required" message if the value is blank and the location is not blank (but still considered valid) and contains a valid lat/long tuple-->
+    <span class="error" *ngIf="radius == '' && isValidLocation()">* Required with location</span>
+    <span class="error" *ngIf="radius != '' && !isValidRadius()">Invalid radius</span>
+  </dd>
   <dt><label for="order">Sort by:</label></dt>
   <dd>
     <select name="order" (change)="orderBy = $event.target.value">
@@ -20,10 +26,12 @@
     </select>
   </dd>
   <dt></dt>
-  <dd><button id="search-button" (click)="performSearch()">Search</button></dd>
+  <dd><br><button id="search-button" (click)="performSearch()">Search</button></dd>
+  <dt></dt>
+  <dd><input class="error" type="text" disabled="disabled" [(ngModel)]="errorMessage" /></dd>
 </dl>
-<div id="error">{{errorMessage}}</div>
-<div *ngIf="working">Searching...</div>
+<div class="status" *ngIf="working">Searching...</div>
+<div class="status" *ngIf="!working && (!searchResults || searchResults.length == 0)">No results</div>
 <ul class="search-list">
   <li *ngFor="#result of searchResults"
     [class.selected]="result === selectedVideo"

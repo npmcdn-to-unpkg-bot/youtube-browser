@@ -1,6 +1,5 @@
 body {
-  padding: 25px;
-  font: 12px Arial, Helvetica, sans-serif;
+  font: .8em Arial, Helvetica, sans-serif;
 }
 
 #error {
@@ -14,4 +13,3 @@ body {
 .right {
   float:right;
 }
-
