@@ -1,11 +1,60 @@
-<div id="player" class="modal">
+<div>
   <div>
-    <div *ngIf="selectedVideo">
-      <h4>{{selectedVideo.title}}</h4>
+    <div id="player">
+      <iframe src="//www.youtube.com/embed/{{vidInfo?.videoId}}" frameborder="0" allowfullscreen></iframe>
     </div>
-    <div *ngIf="!selectedVideo" class="error">
-      A problem occurred retrieving the video
+    <h3>
+      {{vidInfo?.title}}
+      <input type="checkbox" title="Favorite" 
+      (change)="toggleFavorite($event)" [(ngModel)]="isFavorite" />
+    </h3>
+    <p class="pre">{{ vidInfo?.description}}</p>
+    
+    <h4 [class.detail_active]="detailView === 'vidInfo'" (click)="onSelect('vidInfo')">Video Detail</h4>
+    <div id="vidInfo" [class.detail_active]="detailView === 'vidInfo'">
+      <dl>
+        <dt>Video ID:</dt>
+        <dd>{{videoId}} </dd>
+        <dt>Published:</dt>
+        <dd>{{vidInfo?.publishedAt}} </dd>
+        <dt>Tags:</dt>
+        <dd><span class="tag" *ngFor="#tag of vidInfo?.tags">{{tag}}</span>&nbsp;</dd>
+      </dl>
     </div>
+    
+    <h4 [class.detail_active]="detailView === 'chInfo'" (click)="onSelect('chInfo')">Channel Detail</h4>
+    <div id="chInfo" [class.detail_active]="detailView === 'chInfo'">
+      <dl>
+        <dt>Channelt ID:</dt>
+        <dd>{{vidInfo?.channelId}}
+        <dt>Channel Name:</dt>
+        <dd>{{vidInfo?.channelTitle}}
+      </dl>
+    </div>
+    
+    <h4 [class.detail_active]="detailView === 'likeInfo'" (click)="onSelect('likeInfo')">Statistics</h4>
+    <div id="likeInfo" [class.detail_active]="detailView === 'likeInfo'">
+      <dl>
+        <dt>Views:</dt>
+        <dd>{{vidStats?.viewCount}}
+        <dt>Likes:</dt>
+        <dd>{{vidStats?.likeCount}}
+        <dt>Dislikes:</dt>
+        <dd>{{vidStats?.dislikeCount}}
+        <dt>Favorites:</dt>
+        <dd>{{vidStats?.favoriteCount}}
+        <dt>Comment Count:</dt>
+        <dd>{{vidStats?.commentCount}}
+      </dl>
+    </div>
+    
+    <h4 [class.detail_active]="detailView === 'comments'" (click)="onSelect('comments')">Comments</h4>
+    <div id="comments" [class.detail_active]="detailView === 'comments'">
+      <div class="comment" *ngFor="#c of comments">{{c.snippet?.topLevelComment?.snippet?.textDisplay}}</div>
+    </div>
+  </div>
+  <div class="error">{{errorMessage}}</div>
+  <div id="player-nav">
     <a (click)="back()">Back to Search Results</a>
   </div>
 </div>

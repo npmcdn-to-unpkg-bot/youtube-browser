@@ -13,3 +13,22 @@ body {
 .right {
   float:right;
 }
+
+.pre {
+  white-space: pre;
+}
+
+a:hover {
+  cursor: pointer;
+}
+
+dt {
+  float:left;
+  margin: 0 10px 5px 0;
+  text-align: right;
+  width:80px;
+}
+
+dd {
+  margin: 0 0 10px 0px;
+}

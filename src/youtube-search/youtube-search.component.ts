@@ -40,8 +40,7 @@ export class YouTubeSearchComponent {
       return;
     }
     
-    this.setWorking(true);
-    
+    this.working = true;
     this.searchResults = [];
     this.errorMessage = '';
     console.log("Query: " + this.query);
@@ -50,15 +49,11 @@ export class YouTubeSearchComponent {
 
     //Perform the search using the search service, which returns a Promise of YouTubeSearchResult[]
     //then.. set this object's searchResults to the value returned by Promise.resolve
-    this._searchService.search(this).then(searchResults => this.searchResults = searchResults);
-
-    this.setWorking(false);
+    this._searchService.search(this) //pass this as a parameter so the service can access its variables
+      .then(searchResults => this.searchResults = searchResults) //set this.searchResults to the value returned from the Promise
+      .then(() => this.working = false); //set the 'working' flag to false when the results have arrived
   }
   
-  setWorking(working:boolean) {
-    this.working = working; return; 
-  }
-
   //a function to track the selected video
   onSelect(result: YouTubeSearchResult) { 
     this.selectedVideo = result;
@@ -98,6 +93,6 @@ export class YouTubeSearchComponent {
     return this.isValidLocation() && this.radius.match(/^\d+(m|km|ft|mi)$/); 
   }
   isValid() {
-    return this.geolocation == '' || (this.isValidLocation() && this.isValidRadius());
+    return this.geolocation === '' || (this.isValidLocation() && this.isValidRadius());
   }
 }

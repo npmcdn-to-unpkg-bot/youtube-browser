@@ -48,7 +48,7 @@ export class YouTubeSearchService {
 
     console.log(request);
 
-    //Return a promise of YouTubeSearchResult[] after receiving query results
+    //Execute the request and return a promise of YouTubeSearchResult[]
     return new Promise<YouTubeSearchResult[]>(resolve => {
       console.log('Executing request');
 
@@ -112,10 +112,72 @@ export class YouTubeSearchService {
   
   //Procedure to get information about a specific video
   //Returns: Promise<YouTubeSearchResult>
-  getVideo(videoId:string) {
+  getVideo(videoId: string) {
     console.log('Retrieving video ' + videoId);
     return Promise.resolve(this.results).then(
       results => results.filter(result => result.videoId === videoId)[0]
       );
+  }
+  
+  getVideoInfo(videoId: string, part: string) {
+    
+    var params = { 
+      part: part,
+      id: videoId
+    };
+    
+    //build the search request
+    var request = gapi.client.youtube.videos.list(params);
+
+    console.log(request);
+
+    //Execute the request and return a promise of the result
+    return new Promise<any>(resolve => {
+      console.log('Executing request');
+
+      //necessary for request.execute function to be able to access this.results
+      var results = this.results;
+
+      //execute the request
+      request.execute(function(response) {
+        switch (part) {
+          case 'statistics':
+            console.log(response.items[0].statistics);
+            resolve(response.items[0].statistics);
+            break;
+          case 'snippet':
+            console.log(response.items[0].snippet);
+            resolve(response.items[0].snippet);
+            break;
+        }
+      });
+    });
+  }
+  
+  getComments(videoId: string) {
+    
+    var params = { 
+      part: 'snippet',
+      videoId: videoId
+    };
+    
+    //build the search request
+    var request = gapi.client.youtube.commentThreads.list(params);
+
+    console.log(request);
+
+    //Return a promise of YouTubeSearchResult[] after receiving query results
+    return new Promise<any>(resolve => {
+      console.log('Executing request');
+
+      //necessary for request.execute function to be able to access this.results
+      var results = this.results;
+
+      //execute the request
+      request.execute(function(response) {
+        console.log(response.items);
+        resolve(response.items);
+      });
+    });
   }
 }
