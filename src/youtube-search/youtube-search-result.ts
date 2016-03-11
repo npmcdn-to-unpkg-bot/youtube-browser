@@ -2,7 +2,7 @@
 //in TypeScript without transpiling any JavaScript code. If any logic or 
 //procedures are necessary in the future, it can be converted to a class.
 export interface YouTubeSearchResult {
-  etag: string,
+  //etag: string,
   videoId: string,
   channelId: string,
   channelTitle: string,
@@ -10,7 +10,15 @@ export interface YouTubeSearchResult {
   description: string,
   timestamp: string,
   thumbnails: { 
-    high: { height: number, width: number, url: string },
-    medium: { height: number, width: number, url: string }
+    high: { 
+      //height: number, 
+      //width: number, 
+      url: string 
+    },
+    medium: { 
+      //height: number, 
+      //width: number, 
+      url: string 
+    }
   }
 }

@@ -1,1 +1,15 @@
 <h2>Favorites</h2>
+<a (click)="clear()">Clear Favorites</a>
+<br>
+<div class="status" *ngIf="faves?.length === 0">You have not saved any favorites</div>
+<ul class="video-list">
+  <li *ngFor="#fav of faves"
+    [class.selected]="fav === selectedVideo"
+    (click)="onSelect(fav)">
+    <img src="{{fav.thumbnails?.medium?.url}}" class="thumbnail">
+    <div class="info">
+      <h4>{{fav.title}}</h4>
+      <span class="description">{{fav.description}}</span>
+    </div>
+  </li>
+</ul>

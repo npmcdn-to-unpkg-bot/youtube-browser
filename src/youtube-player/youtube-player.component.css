@@ -68,14 +68,23 @@ span.tag {
   border-radius: 4px;
 }
 
-.fav, .nofav {
-  width:20px;
-  height: 20px;
-  border: 1px solid;
+.comment {
+  padding: 10px;
+  margin-bottom: 10px;
+  background: #EEE;
+  border-radius: 4px;
+  min-height: 50px;
 }
-.fav {
-  background: yellow;
+.comment .comment {
+  margin-left: 10px;
 }
-.nofav {
-  background: auto;
+.comment img {
+  float: left;
+  margin-right: 10px;
+  max-height: 50px;
+}
+.comment .timestamp {
+  float:right;
+  font-size: 8pt;
+  margin: -6px -6px 10px 10px;
 }

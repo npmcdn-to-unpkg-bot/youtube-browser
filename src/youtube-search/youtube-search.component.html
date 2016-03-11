@@ -35,7 +35,7 @@
 <div class="status" *ngIf="!working && searchResults?.length === 0">No results</div>
 <!-- check searchResults.length to force change detection of the 'working' variable -->
 <div class="status" *ngIf="working && searchResults?.length === 0">Searching...</div>
-<ul class="search-list">
+<ul class="video-list">
   <li *ngFor="#result of searchResults"
     [class.selected]="result === selectedVideo"
     (click)="onSelect(result)">

@@ -74,7 +74,7 @@ export class YouTubeSearchService {
 
           //create a new YouTubeSearchResult
           var r:YouTubeSearchResult = {
-            etag : result.etag,
+            //etag : result.etag,
             videoId : result.id.videoId,
             channelId : result.snippet.channelId,
             channelTitle : result.snippet.channelTitle, 
@@ -83,13 +83,13 @@ export class YouTubeSearchService {
             timestamp : result.snippet.publishedAt,
             thumbnails : {
               high : { 
-                height:(result.snippet.thumbnails.high.height), 
-                width:(result.snippet.thumbnails.high.width), 
+          //      height:(result.snippet.thumbnails.high.height), 
+          //      width:(result.snippet.thumbnails.high.width), 
                 url:(result.snippet.thumbnails.high.url) 
               },
               medium : { 
-                height:(result.snippet.thumbnails.medium.height), 
-                width:(result.snippet.thumbnails.medium.width), 
+          //      height:(result.snippet.thumbnails.medium.height), 
+          //      width:(result.snippet.thumbnails.medium.width), 
                 url:(result.snippet.thumbnails.medium.url) 
               }
             }

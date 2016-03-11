@@ -1,14 +1,14 @@
 <div>
   <div>
     <div id="player">
-      <iframe src="//www.youtube.com/embed/{{vidInfo?.videoId}}" frameborder="0" allowfullscreen></iframe>
+      <iframe src="//www.youtube.com/embed/{{videoId}}" frameborder="0" allowfullscreen></iframe>
     </div>
     <h3>
       {{vidInfo?.title}}
       <input type="checkbox" title="Favorite" 
       (change)="toggleFavorite($event)" [(ngModel)]="isFavorite" />
     </h3>
-    <p class="pre">{{ vidInfo?.description}}</p>
+    <p class="pre">{{ vidInfo?.description }}</p>
     
     <h4 [class.detail_active]="detailView === 'vidInfo'" (click)="onSelect('vidInfo')">Video Detail</h4>
     <div id="vidInfo" [class.detail_active]="detailView === 'vidInfo'">
@@ -50,7 +50,17 @@
     
     <h4 [class.detail_active]="detailView === 'comments'" (click)="onSelect('comments')">Comments</h4>
     <div id="comments" [class.detail_active]="detailView === 'comments'">
-      <div class="comment" *ngFor="#c of comments">{{c.snippet?.topLevelComment?.snippet?.textDisplay}}</div>
+      <div class="comment" *ngFor="#c of comments">
+        <div class="timestamp">
+        {{c.snippet?.topLevelComment?.snippet?.publishedAt | mytimestamp}}
+        </div>
+        <strong>
+          <img class="left" src="{{c.snippet?.topLevelComment?.snippet?.authorProfileImageUrl}}">
+          {{c.snippet?.topLevelComment?.snippet?.authorDisplayName}}
+        </strong><br>
+        {{ c.snippet?.topLevelComment?.snippet?.textDisplay }}
+        <br>
+      </div>
     </div>
   </div>
   <div class="error">{{errorMessage}}</div>

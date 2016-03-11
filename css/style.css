@@ -15,7 +15,7 @@ body {
 }
 
 .pre {
-  white-space: pre;
+  white-space: pre-wrap;
 }
 
 a:hover {
@@ -31,4 +31,47 @@ dt {
 
 dd {
   margin: 0 0 10px 0px;
+}
+
+
+.video-list {
+  margin: 0 0 2em 0;
+  list-style-type: none;
+  padding: 0;
+  width: 100%;
+}
+.video-list li {
+  cursor: pointer;
+  left: 0;
+  background-color: #DDD;
+  margin: .5em;
+  padding: .3em;
+  border-radius: 4px;
+  min-height: 80px;
+}
+.video-list li.selected:hover {
+  background-color: #BBD8DC !important;
+}
+.video-list li:hover {
+  background-color: #EEE;
+}
+.video-list .selected {
+  background-color: #CFD8DC !important;
+  color: white;
+}
+.video-list img.thumbnail {
+  position:absolute;
+  width: 110px;
+  border-radius: 2px;
+  padding:4px;
+}
+.video-list div.info {
+  margin-left: 120px;
+  margin-top: -10px;
+}
+.status {
+    margin-top: 10px;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid;
 }
