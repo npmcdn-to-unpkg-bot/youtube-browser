@@ -1,5 +1,6 @@
 <div>
-  <div>
+  <div class="error">{{errorMessage}}</div>
+  <div class="details">
     <div id="player">
       <iframe src="//www.youtube.com/embed/{{videoId}}" frameborder="0" allowfullscreen></iframe>
     </div>
@@ -50,6 +51,7 @@
     
     <h4 [class.detail_active]="detailView === 'comments'" (click)="onSelect('comments')">Comments</h4>
     <div id="comments" [class.detail_active]="detailView === 'comments'">
+      <div class="status" *ngIf="comments?.length === 0">No comments</div>
       <div class="comment" *ngFor="#c of comments">
         <div class="timestamp">
         {{c.snippet?.topLevelComment?.snippet?.publishedAt | mytimestamp}}
@@ -58,13 +60,14 @@
           <img class="left" src="{{c.snippet?.topLevelComment?.snippet?.authorProfileImageUrl}}">
           {{c.snippet?.topLevelComment?.snippet?.authorDisplayName}}
         </strong><br>
-        {{ c.snippet?.topLevelComment?.snippet?.textDisplay }}
+        <span class="text pre" [innerHTML]="c.snippet?.topLevelComment?.snippet?.textDisplay"></span>
         <br>
       </div>
     </div>
   </div>
-  <div class="error">{{errorMessage}}</div>
-  <div id="player-nav">
-    <a (click)="back()">Back to Search Results</a>
-  </div>
 </div>
+<footer>
+  <div class="nav">
+    <a id="back" (click)="back()">&#x21b6; Back to Search Results</a>
+  </div>
+</footer>

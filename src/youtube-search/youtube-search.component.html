@@ -2,20 +2,27 @@
 <div class="search-params">
   <dl>
     <dt><label for="query">Query:</label></dt>
-    <dd><input id="query" type="text" placeholder="Search Keywords" [(ngModel)]="query" /></dd>
+    <dd>
+      <input id="query" type="text" placeholder="Search Keywords"
+        [(ngModel)]="query" (keyup.enter)="performSearch()" />
+    </dd>
     <dt><label for="location">Location:</label></dt>
     <dd>
-      <input id="location" type="text" placeholder="lat,long" [(ngModel)]="geolocation" />
-      <button id="my-location" (click)="getLocation()">Use my location</button>
-      <span class="success" *ngIf="isValidLocation()">Valid location</span>
-      <span class="error" *ngIf="geolocation != '' && !isValidLocation()">Invalid location</span>
+      <input id="location" type="text" placeholder="lat,long"
+        [(ngModel)]="geolocation" (keyup.enter)="performSearch()" />
+      <span class="success" *ngIf="isValidLocation()">&#x2713;</span>
+      <span class="error" *ngIf="geolocation !== '' && !isValidLocation()">&#x2716; Invalid Coordinates for Earth</span>
+      <br>
+      <button id="my-location" (click)="getLocation()">Use my current location</button>
     </dd>
     <dt><label for="radius">Radius:</label></dt>
     <dd>
-      <input id="radius" type="text" placeholder="4mi" [(ngModel)]="radius" />
+      <input id="radius" type="text" placeholder="4mi" 
+        [(ngModel)]="radius" (keyup.enter)="performSearch()" />
       <!--Show a "required" message if the value is blank and the location is not blank (but still considered valid) and contains a valid lat/long tuple-->
-      <span class="error" *ngIf="radius === '' && isValidLocation()">* Required with location</span>
-      <span class="error" *ngIf="radius !== '' && !isValidRadius()">Invalid radius</span>
+      <span class="success" *ngIf="isValidRadius()">&#x2713;</span>
+      <span class="error" *ngIf="radius === '' && isValidLocation()">&#x2716; Required with location</span>
+      <span class="error" *ngIf="geolocation !== '' && radius !== '' && !isValidRadius()">&#x2716; Invalid</span>
     </dd>
     <dt><label for="order">Sort by:</label></dt>
     <dd>
@@ -42,11 +49,13 @@
     <img src="{{result.thumbnails.medium.url}}" class="thumbnail">
     <div class="info">
       <h4>{{result.title}}</h4>
-      <span class="description">{{result.description}}</span>
+      <span class="description pre" [innerHTML]="result.description"></span>
     </div>
   </li>
 </ul>
-<div id="search-nav">
-  <a id="search-prev" *ngIf="prevPageToken" (click)="performSearch(prevPageToken)">Previous</a>
-  <a id="search-next" *ngIf="nextPageToken" (click)="performSearch(nextPageToken)">Next</a>
-</div>
+<footer>
+  <div class="nav">
+    <a id="back" *ngIf="prevPageToken" (click)="performSearch(prevPageToken)">&#x21b6; Previous</a>
+    <a id="forward" *ngIf="nextPageToken" (click)="performSearch(nextPageToken)">&#x21b7; Next</a>
+  </div>
+</footer>

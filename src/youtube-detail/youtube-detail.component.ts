@@ -3,17 +3,18 @@ import { Component, OnInit } from 'angular2/core';
 import { Router, RouteParams } from 'angular2/router';
 //My stuff
 import { YouTubeSearchService } from '../youtube-search/youtube-search.service';
-import { YouTubeSearchResult } from '../youtube-search/youtube-search-result';
-import { MyTimestampPipe } from './my-timestamp.pipe';
+import { YouTubeVideo } from '../common/interfaces';
+import { MyTimestampPipe } from '../custom-pipes/my-timestamp.pipe';
+import { UnescapePipe } from '../custom-pipes/unescape.pipe';
 
 @Component({
-  selector: 'youtube-player',
-  templateUrl: 'src/youtube-player/youtube-player.component.html',
-  styleUrls: ['src/youtube-player/youtube-player.component.css'],
+  selector: 'youtube-detail',
+  templateUrl: 'src/youtube-detail/youtube-detail.component.html',
+  styleUrls: ['src/youtube-detail/youtube-detail.component.css'],
   inputs: ['selectedVideo'],
-  pipes: [MyTimestampPipe]
+  pipes: [MyTimestampPipe, UnescapePipe]
 })
-export class YouTubePlayerComponent implements OnInit {
+export class YouTubeDetailComponent implements OnInit {
 
   videoId: string;
   vidInfo: any;
@@ -21,6 +22,7 @@ export class YouTubePlayerComponent implements OnInit {
   comments: any[];
   detailView: string = 'vidInfo';
   isFavorite: boolean = false;
+  errorMessage: string = '';
   
   constructor(private _searchService: YouTubeSearchService,
               private _router: Router,
@@ -55,48 +57,40 @@ export class YouTubePlayerComponent implements OnInit {
     var faves = localStorage.getItem('faves') ? JSON.parse(localStorage.getItem('faves')) : [];
     
     if (!this.isFavorite) {
-      var f:YouTubeSearchResult = {
+      var f:YouTubeVideo = {
         videoId : this.videoId,
         channelId : this.vidInfo.channelId,
-        channelTitle : this.vidInfo.channelTitle, 
+        channelTitle : this.vidInfo.channelTitle,
         title : this.vidInfo.title,
         description : this.vidInfo.description,
         timestamp : this.vidInfo.publishedAt,
         thumbnails : {
-          high : { 
-        //    height:(result.snippet.thumbnails.high.height), 
-        //    width:(result.snippet.thumbnails.high.width), 
-            url:(this.vidInfo.thumbnails.high.url) 
+          high : {
+            url:(this.vidInfo.thumbnails.high.url)
           },
-          medium : { 
-        //    height:(result.snippet.thumbnails.medium.height), 
-        //    width:(result.snippet.thumbnails.medium.width), 
-            url:(this.vidInfo.thumbnails.medium.url) 
+          medium : {
+            url:(this.vidInfo.thumbnails.medium.url)
           }
         }
       };
+
       faves.push(f);
     }
     else {
-      var f:YouTubeSearchResult = faves.find(fave => fave.videoId === this.videoId);
+      var f:YouTubeVideo = faves.find(fave => fave.videoId === this.videoId);
       
-      //remove video (if it exists)
+      //remove video from array (if it exists)
       if (f) {
         var i = faves.indexOf(f);
         faves.splice(i, 1);
       }
+      
+      //otherwise, do nothing.. it's not in the array
     }
     
     //if we make it to this point, it's safe to change the value of this.isFavorite
     this.isFavorite = !this.isFavorite;
-    
-    //console.log(faves);
-    //console.log(localStorage.getItem('faves'));
-    
+        
     localStorage.setItem('faves', JSON.stringify(faves));
-    
-    console.log(faves);
-    console.log(localStorage.getItem('faves'));
-    
   }
 }

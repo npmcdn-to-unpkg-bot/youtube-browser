@@ -2,20 +2,20 @@
 import { Component } from 'angular2/core';
 import { Router } from 'angular2/router';
 //My stuff
-import { YouTubeSearchResult } from './youtube-search-result';
+import { YouTubeVideo, YouTubeSearchParameters } from '../common/interfaces';
 import { YouTubeSearchService } from './youtube-search.service';
-import { YouTubePlayerComponent } from '../youtube-player/youtube-player.component';
+import { YouTubeDetailComponent } from '../youtube-detail/youtube-detail.component';
 
 @Component({
   selector: 'youtube-search',
   templateUrl: 'src/youtube-search/youtube-search.component.html',
   styleUrls: ['src/youtube-search/youtube-search.component.css'],
-  directives: [YouTubePlayerComponent]
+  directives: [YouTubeDetailComponent]
 })
 export class YouTubeSearchComponent {
 
-  searchResults:YouTubeSearchResult[];  //array to hold page of search results
-  selectedVideo:YouTubeSearchResult;    //pointer to selected video
+  searchResults:YouTubeVideo[];  //array to hold page of search results
+  selectedVideo:YouTubeVideo;    //pointer to selected video
   query:string = '';                    //user-provided query
   prevPageToken:string = '';            //token for previous page of search results (if applicable)
   nextPageToken:string = '';            //token for next page of search results (if applicable)
@@ -35,32 +35,103 @@ export class YouTubeSearchComponent {
   
   performSearch(pageToken:string) {
     
+    //test user input for validity
     if (!this.isValid()) {
       this._displayError('Invalid input');
       return;
     }
     
-    this.working = true;
-    this.searchResults = [];
-    this.errorMessage = '';
+    this.working = true; //set status to working
+    this.searchResults = []; //clear searchResults array
+    this.errorMessage = ''; //clear any error messages
+    
     console.log("Query: " + this.query);
 
-    this.pageToken = pageToken;
+    //Define search parameters
+    var searchParams:YouTubeSearchParameters = { 
+      part: 'snippet',
+      type: 'video',
+      q: this.query
+    };
+    
+    //additional parameters
+    if (this.pageToken) { searchParams['pageToken'] = this.pageToken; }
+    if (this.orderBy != '') { searchParams['order'] = this.orderBy; }
 
-    //Perform the search using the search service, which returns a Promise of YouTubeSearchResult[]
+    //verify that the location is a valid latitude/longitude tuple before setting the search parameter
+    if (this.isValidLocation()) { 
+      searchParams['location'] = this.geolocation;
+    
+      //only check/add the radius parameter if the location is specified
+      if (this.radius.match(/[0-9]+(m|km|ft|mi)/)) {
+        searchParams['locationRadius'] = this.radius;
+      }
+      else if (this.radius != '') { this._displayError('Invalid radius'); }
+    }
+    else if (this.geolocation != '') { this._displayError('Invalid location'); }
+
+    
+    //Perform the search using the search service, which returns a Promise of YouTubeVideo[]
     //then.. set this object's searchResults to the value returned by Promise.resolve
-    this._searchService.search(this) //pass this as a parameter so the service can access its variables
-      .then(searchResults => this.searchResults = searchResults) //set this.searchResults to the value returned from the Promise
+    this._searchService.search(searchParams) //pass this as a parameter so the service can access its variables
+      .then((response:any) => { //process response from Promise and populate this.searchResults
+        
+        if (response.code && response.code != 200) {
+            this._displayError(response.code + ' - ' + response.message);
+            return [];
+        }
+
+        this.nextPageToken = response.nextPageToken;
+        this.prevPageToken = response.prevPageToken;
+
+        //necessary for Array.forEach function to be able to access this.searchResults
+        var searchResults = this.searchResults;
+
+        //for each item received..
+        response.items.forEach(function(result, index, array) {
+          //console.log(result);
+
+          //create a new YouTubeVideo
+          var r:YouTubeVideo = {
+            videoId : result.id.videoId,
+            etag : result.etag,
+            channelId : result.snippet.channelId,
+            channelTitle : result.snippet.channelTitle, 
+            title : result.snippet.title,
+            description : result.snippet.description,
+            timestamp : result.snippet.publishedAt,
+            thumbnails : {
+              high : { 
+                height:(result.snippet.thumbnails.high.height), 
+                width:(result.snippet.thumbnails.high.width), 
+                url:(result.snippet.thumbnails.high.url) 
+              },
+              medium : { 
+                height:(result.snippet.thumbnails.medium.height), 
+                width:(result.snippet.thumbnails.medium.width), 
+                url:(result.snippet.thumbnails.medium.url) 
+              }
+            }
+          };
+
+          //console.log(r);
+
+          //...and push it to this.searchResults (through local results variable)
+          searchResults.push(r);
+        });
+        
+      })
+      .then(() => this.pageToken = pageToken) //update the page token to the provided 
       .then(() => this.working = false); //set the 'working' flag to false when the results have arrived
   }
   
   //a function to track the selected video
-  onSelect(result: YouTubeSearchResult) { 
+  onSelect(result: YouTubeVideo) { 
     this.selectedVideo = result;
-    this.openPlayer();
+    this.openDetail();
   }
-  openPlayer() {
-    this._router.navigate(['Player', { videoId: this.selectedVideo.videoId }]);
+  openDetail() {
+    this._router.navigate(['Detail', { videoId: this.selectedVideo.videoId }]);
   }
 
   getLocation() {

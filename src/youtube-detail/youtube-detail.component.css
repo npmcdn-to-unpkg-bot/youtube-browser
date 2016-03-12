@@ -1,3 +1,7 @@
+div.details {
+  padding-bottom: 30px;
+}
+
 .error {
   background: rgba(0,0,0,0);
   border:0px;
@@ -18,17 +22,6 @@
   position: absolute;
 }
 
-#player-nav {
-  width: 100%;
-  padding: 3px;
-  font-size: 16px;
-  font-weight: bold;
-  position: fixed;
-  height: 20px;
-  bottom: 0;
-  left: 0;
-  background: rgba(240,240,240,100);
-}
 
 /* Title */
 h3 {
@@ -87,4 +80,7 @@ span.tag {
   float:right;
   font-size: 8pt;
   margin: -6px -6px 10px 10px;
+}
+.comment .text {
+  display: table-cell;
 }

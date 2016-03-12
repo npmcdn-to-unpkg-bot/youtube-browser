@@ -2,7 +2,7 @@
 import { Component, OnInit } from 'angular2/core';
 import { Router } from 'angular2/router';
 //My stuff
-import { YouTubeSearchResult } from '../youtube-search/youtube-search-result';
+import { YouTubeVideo } from '../common/interfaces';
 
 @Component({
   selector: 'favorites',
@@ -12,8 +12,8 @@ import { YouTubeSearchResult } from '../youtube-search/youtube-search-result';
 export class FavoritesComponent {
 
   errorMessage:string;
-  faves:YouTubeSearchResult[];
-  selectedVideo:YouTubeSearchResult;    //pointer to selected video
+  faves:YouTubeVideo[];
+  selectedVideo:YouTubeVideo;    //pointer to selected video
   
   constructor(private _router:Router) { }
               
@@ -25,12 +25,12 @@ export class FavoritesComponent {
   }
   
   //a function to track the selected video
-  onSelect(result: YouTubeSearchResult) { 
+  onSelect(result: YouTubeVideo) { 
     this.selectedVideo = result;
-    this.openPlayer();
+    this.openDetail();
   }
-  openPlayer() {
-    this._router.navigate(['Player', { videoId: this.selectedVideo.videoId }]);
+  openDetail() {
+    this._router.navigate(['Detail', { videoId: this.selectedVideo.videoId }]);
   }
   
   clear() {

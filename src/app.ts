@@ -2,13 +2,14 @@
 import { Component, OnInit } from 'angular2/core';
 import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from 'angular2/router';
 //My stuff
-import { YouTubeSearchResult } from './youtube-search/youtube-search-result';
+import { Constants } from './constants';
+import { YouTubeVideo } from './common/interfaces';
 import { YouTubeSearchService } from './youtube-search/youtube-search.service';
 import { YouTubeSearchComponent } from './youtube-search/youtube-search.component';
-import { YouTubePlayerComponent } from './youtube-player/youtube-player.component';
+import { YouTubeDetailComponent } from './youtube-detail/youtube-detail.component';
 import { FavoritesComponent } from './favorites/favorites.component';
 
-//declare the gapi variable to avoid errors
+//declare the gapi variable to avoid TypeScript compiler errors
 declare var gapi : any;
 
 @Component({
@@ -25,22 +26,23 @@ declare var gapi : any;
   directives: [ROUTER_DIRECTIVES],
   providers: [ROUTER_PROVIDERS, YouTubeSearchService]
 })
+
+//Define routes to components
 @RouteConfig([
   { path: '/search', name: 'Search', component: YouTubeSearchComponent, useAsDefault: true },
-  { path: '/player/:videoId', name: 'Player', component: YouTubePlayerComponent },
+  { path: '/detail/:videoId', name: 'Detail', component: YouTubeDetailComponent },
   { path: '/favorites', name: 'Favorites', component: FavoritesComponent }
 ])
-export class App implements OnInit {
-  public title = 'YouTube Browser';
-  
-  //Google Browser API Key
-  API_KEY = 'AIzaSyBIN5pEfYIU-IULSw121ojZ9xxf8RShFBA';
 
+export class App implements OnInit {
+  
+  public title:string = Constants.APP_TITLE;
+  
   ngOnInit() { this.google_api_init(); }
   
   //Initialize Google API
   google_api_init() {
-    gapi.client.setApiKey(this.API_KEY);
+    gapi.client.setApiKey(Constants.API_KEY);
     
     //load the YouTube API; when ready, execute YouTubeAPILoaded()
     gapi.client.load('youtube', 'v3', function() { YouTubeSearchComponent.YouTubeAPILoaded(); });
