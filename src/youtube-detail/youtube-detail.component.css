@@ -77,10 +77,20 @@ span.tag {
   max-height: 50px;
 }
 .comment .timestamp {
-  float:right;
+  float: right;
   font-size: 8pt;
   margin: -6px -6px 10px 10px;
 }
 .comment .text {
   display: table-cell;
+}
+
+.loadmore {
+  width: 100%;
+  border: 1px solid gainsboro;
+  padding: 10px 0px 10px 0px;
+  text-align: center;
+}
+.loadmore a:hover {
+  background: #EEE;
 }

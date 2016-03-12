@@ -13,6 +13,7 @@
     
     <h4 [class.detail_active]="detailView === 'vidInfo'" (click)="onSelect('vidInfo')">Video Detail</h4>
     <div id="vidInfo" [class.detail_active]="detailView === 'vidInfo'">
+      <div class="status" *ngIf="info_working">Loading...</div>
       <dl>
         <dt>Video ID:</dt>
         <dd>{{videoId}} </dd>
@@ -25,6 +26,7 @@
     
     <h4 [class.detail_active]="detailView === 'chInfo'" (click)="onSelect('chInfo')">Channel Detail</h4>
     <div id="chInfo" [class.detail_active]="detailView === 'chInfo'">
+      <div class="status" *ngIf="info_working">Loading...</div>
       <dl>
         <dt>Channelt ID:</dt>
         <dd>{{vidInfo?.channelId}}
@@ -35,6 +37,7 @@
     
     <h4 [class.detail_active]="detailView === 'likeInfo'" (click)="onSelect('likeInfo')">Statistics</h4>
     <div id="likeInfo" [class.detail_active]="detailView === 'likeInfo'">
+      <div class="status" *ngIf="stats_working">Loading...</div>
       <dl>
         <dt>Views:</dt>
         <dd>{{vidStats?.viewCount}}
@@ -51,7 +54,7 @@
     
     <h4 [class.detail_active]="detailView === 'comments'" (click)="onSelect('comments')">Comments</h4>
     <div id="comments" [class.detail_active]="detailView === 'comments'">
-      <div class="status" *ngIf="comments?.length === 0">No comments</div>
+      <div class="status" *ngIf="comments?.length === 0 && !comments_working">No comments</div>
       <div class="comment" *ngFor="#c of comments">
         <div class="timestamp">
         {{c.snippet?.topLevelComment?.snippet?.publishedAt | mytimestamp}}
@@ -62,6 +65,10 @@
         </strong><br>
         <span class="text pre" [innerHTML]="c.snippet?.topLevelComment?.snippet?.textDisplay"></span>
         <br>
+      </div>
+      <div class="status" *ngIf="comments_working">Loading...</div>
+      <div class="loadmore" *ngIf="nextPageToken && !comments_working">
+        <a (click)="loadComments(nextPageToken)">More</a>
       </div>
     </div>
   </div>

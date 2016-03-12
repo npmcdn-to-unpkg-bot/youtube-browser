@@ -30,5 +30,24 @@ export interface YouTubeSearchParameters {
   q?: string,
   location?: string,
   locationRadius?: string,
-  order?: string
+  order?: string,
+  maxResults?: number,
+  pageToken?: string
+}
+
+export interface YouTubeVideoListParameters {
+  part: string,
+  id: string,
+  maxResults?: number,
+  pageToken?: string
+}
+
+export interface YouTubeCommentThreadListParameters {
+  part: string,
+  id?: string,
+  videoId?: string,
+  order?: string,
+  maxResults?: number,
+  pageToken?: string,
+  textValue?: string
 }

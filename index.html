@@ -7,29 +7,69 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Google API Javasript library -->
     <script src="https://apis.google.com/js/client.js"></script>
     
-    <!-- IE required polyfills, in this exact order -->
+    <!-- IE required polyfills (in this exact order) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-shim/0.33.3/es6-shim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/systemjs/0.19.20/system-polyfills.js"></script>
     <script src="https://npmcdn.com/angular2@2.0.0-beta.8/es6/dev/src/testing/shims_for_IE.js"></script>
-   
-    <script src="https://code.angularjs.org/2.0.0-beta.8/angular2-polyfills.js"></script>
-    <script src="https://code.angularjs.org/tools/system.js"></script>
-    <script src="https://npmcdn.com/typescript@1.8.2/lib/typescript.js"></script>
-    <script src="https://code.angularjs.org/2.0.0-beta.8/Rx.js"></script>
-    <script src="https://code.angularjs.org/2.0.0-beta.8/angular2.dev.js"></script>
-    <script src="https://code.angularjs.org/2.0.0-beta.8/router.dev.js"></script>
+    
+    <!-- Angular 2 polyfills -->
+    <script src="node_modules/angular2/bundles/angular2-polyfills.js"></script>
+    <!--<script src="https://code.angularjs.org/2.0.0-beta.8/angular2-polyfills.js"></script>-->
+    
+    <!-- SystemJS -->
+    <script src="node_modules/systemjs/dist/system.js"></script>
+    <!--<script src="https://code.angularjs.org/tools/system.js"></script>-->
+    
+    <!-- -->
+    <script src="node_modules/rxjs/bundles/Rx.js"></script>
+    <!--<script src="https://code.angularjs.org/2.0.0-beta.8/Rx.js"></script>-->
+    
+    <!-- Load TypeScript library -->
+    <script src="node_modules/typescript/lib/typescript.js"></script>
+    <!--<script src="https://npmcdn.com/typescript@1.8.2/lib/typescript.js"></script>-->
+    
+    <!-- [Dev] Angular 2 -->
+    <script src="node_modules/angular2/bundles/angular2.dev.js"></script>
+    <!--<script src="https://code.angularjs.org/2.0.0-beta.8/angular2.dev.js"></script>-->
+    
+    <!-- [Prod] Angular 2 -->
+    <!--<script src="node_modules/angular2/bundles/angular2.min.js"></script>-->
+    
+    <!-- [Dev] Angular 2 Router library -->
+    <script src="node_modules/angular2/bundles/router.dev.js"></script>
+    <!--<script src="https://code.angularjs.org/2.0.0-beta.8/router.dev.js"></script>-->
+
+    <!-- [Prod] Angular 2 Router library -->
+    <!--<script src="node_modules/angular2/bundles/router.min.js"></script>-->
+    
+    
+    <!-- Load application with SystemJS -->
     <script>
-      System.config({
-        transpiler: 'typescript', 
-        typescriptOptions: { emitDecoratorMetadata: true }, 
-        packages: {'src': {defaultExtension: 'ts'}} 
-      });
+      var DEBUG = true;
+    
+      //use transpiler in DEBUG mode
+      if (DEBUG) {
+        System.config({
+          transpiler: 'typescript', 
+          typescriptOptions: { emitDecoratorMetadata: true }, 
+          packages: {'src': {defaultExtension: 'ts'}} 
+        });
+      }
+      //in production mode, use the pre-compiled .js files?
+      else {
+        System.config({
+          packages: { 'src': {format: 'register', defaultExtension: 'js'} }
+        });
+      }
+      
+      //bootstrap the Angular application
       System.import('src/main')
         .then(null, console.error.bind(console));
     </script>
-    
   </head>
   <body>
     <youtube-browser>Loading...</youtube-browser>

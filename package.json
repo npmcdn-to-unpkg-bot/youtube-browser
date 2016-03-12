@@ -1,6 +1,6 @@
 {
   "name": "youtube-browser",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "scripts": {
     "start": "concurrently \"npm run tsc:w\" \"npm run lite\" ",    
     "tsc": "tsc",

@@ -39,17 +39,17 @@
     <dd><input class="error" type="text" disabled="disabled" [(ngModel)]="errorMessage" /></dd>
   </dl>
 </div>
-<div class="status" *ngIf="!working && searchResults?.length === 0">No results</div>
-<!-- check searchResults.length to force change detection of the 'working' variable -->
-<div class="status" *ngIf="working && searchResults?.length === 0">Searching...</div>
+<div class="status" *ngIf="!working && videos?.length === 0">No results</div>
+<!-- check videos.length to force change detection of the 'working' variable -->
+<div class="status" *ngIf="working && videos?.length === 0">Searching...</div>
 <ul class="video-list">
-  <li *ngFor="#result of searchResults"
-    [class.selected]="result === selectedVideo"
-    (click)="onSelect(result)">
-    <img src="{{result.thumbnails.medium.url}}" class="thumbnail">
+  <li *ngFor="#video of videos"
+    [class.selected]="video === selectedVideo"
+    (click)="onSelect(video)">
+    <img src="{{video.thumbnails.medium.url}}" class="thumbnail">
     <div class="info">
-      <h4>{{result.title}}</h4>
-      <span class="description pre" [innerHTML]="result.description"></span>
+      <h4>{{video.title}}</h4>
+      <span class="description pre" [innerHTML]="video.description"></span>
     </div>
   </li>
 </ul>
