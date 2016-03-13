@@ -1,7 +1,8 @@
 <h2>Favorites</h2>
+<div class="error">{{errorMessage}}</div>
 <div class="status" *ngIf="!working && faves?.length === 0">You have not saved any favorites</div>
 <!-- check videos.length to force change detection of the 'working' variable -->
-<div class="status" *ngIf="working && videos?.length === 0">Searching...</div>
+<div class="status" *ngIf="working && videos?.length === 0">Retrieving...</div>
 <ul class="video-list">
   <li *ngFor="#video of videos"
     [class.selected]="video === selectedVideo"

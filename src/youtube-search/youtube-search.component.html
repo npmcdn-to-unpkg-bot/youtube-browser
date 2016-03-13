@@ -1,5 +1,6 @@
 <h2>Search</h2>
 <div class="search-params">
+  <div class="error">{{errorMessage}}</div>
   <dl>
     <dt><label for="query">Query:</label></dt>
     <dd>
@@ -30,13 +31,10 @@
         <option value="relevance">Relevance</option>
         <option value="date">Date</option>
         <option value="rating">Rating</option>
-        <option value=""></option>
       </select>
     </dd>
     <dt></dt>
     <dd><br><button id="search-button" (click)="performSearch()">Search</button></dd>
-    <dt></dt>
-    <dd><input class="error" type="text" disabled="disabled" [(ngModel)]="errorMessage" /></dd>
   </dl>
 </div>
 <div class="status" *ngIf="!working && videos?.length === 0">No results</div>

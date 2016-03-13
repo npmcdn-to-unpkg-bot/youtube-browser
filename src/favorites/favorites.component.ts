@@ -33,9 +33,9 @@ export class FavoritesComponent {
   }
               
   ngOnInit() {
-    this.faves = localStorage.getItem('faves') ? JSON.parse(localStorage.getItem('faves')) : [];
+    this.faves = window.localStorage.getItem('faves') ? JSON.parse(window.localStorage.getItem('faves')) : [];
     
-    console.log(this.faves);
+    if (Constants.DEBUG) console.log(this.faves);
     
     if (this.faves.length !==0) {
       //retrieve first page
@@ -62,11 +62,6 @@ export class FavoritesComponent {
     //then.. process the results to populate this.videos[]
     this._searchService.getVideoInfo(params) //pass this as a parameter so the service can access its variables
       .then((response:any) => { //process response from Promise and populate this.videos
-        
-        if (response.code && response.code != 200) {
-            this._displayError(response.code + ' - ' + response.message);
-            return;
-        }
 
         this.nextPageToken = response.nextPageToken;
         this.prevPageToken = response.prevPageToken;
@@ -76,7 +71,7 @@ export class FavoritesComponent {
 
         //for each item received..
         response.items.forEach(function(result, index, array) {
-          //console.log(result);
+          //if (Constants.DEBUG) console.log(result);
 
           //create a new YouTubeVideo
           var r:YouTubeVideo = {
@@ -101,7 +96,7 @@ export class FavoritesComponent {
             }
           };
 
-          console.log(r);
+          if (Constants.DEBUG) console.log(r);
 
           //...and push it to this.videos (through local results variable)
           videos.push(r);
@@ -114,18 +109,16 @@ export class FavoritesComponent {
       }); 
   }
   
-  //a function to track the selected video
+  /* Handle what happens when a user clicks on a search result */
   onSelect(result: YouTubeVideo) { 
     this.selectedVideo = result;
-    this.openDetail();
-  }
-  openDetail() {
     this._router.navigate(['Detail', { videoId: this.selectedVideo.videoId }]);
   }
   
+  /* What happens when the "Clear Favorites" link is pressed? */
   clear() {
     if (confirm('Are you sure you want to clear your favorites?')) {
-      localStorage.removeItem('faves');
+      window.localStorage.removeItem('faves');
       this.faves = [];
       alert('Favorites cleared');
     }

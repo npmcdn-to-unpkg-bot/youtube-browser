@@ -15,7 +15,7 @@ declare var gapi : any;
 @Component({
   selector: 'youtube-browser',
   template: `
-    <h1><a href="/sandbox/youtube-browser">{{title}}</a></h1>
+    <h1><a href="">{{title}}</a></h1>
     <nav>
       <a [routerLink]="['Search']">Search</a>
       <a [routerLink]="['Favorites']">Favorites</a>
@@ -38,13 +38,20 @@ export class App implements OnInit {
   
   public title:string = Constants.APP_TITLE;
   
+  constructor() { }
+  
   ngOnInit() { this.google_api_init(); }
   
   //Initialize Google API
-  google_api_init() {
+  google_api_init():void {
     gapi.client.setApiKey(Constants.API_KEY);
     
     //load the YouTube API; when ready, execute YouTubeAPILoaded()
-    gapi.client.load('youtube', 'v3', function() { YouTubeSearchComponent.YouTubeAPILoaded(); });
+    gapi.client.load('youtube', 'v3', this.YouTubeAPILoaded);
+  }
+  
+  //a function to be called when the YouTube API has been successfully loaded
+  YouTubeAPILoaded():void { 
+    if (Constants.DEBUG) console.log ('YouTube API loaded');
   }
 }
