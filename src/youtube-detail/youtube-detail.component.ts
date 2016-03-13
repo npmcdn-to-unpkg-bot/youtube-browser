@@ -182,7 +182,7 @@ export class YouTubeDetailComponent implements OnInit {
       //find the location of the video in the array
       
       //if this was an Object[] rather than a string[], we would have to use Array.find
-      //var id:string = faves.find(id => id === this.videoId);
+      //var item = faves.find(item => item.videoId === this.videoId);
       
       //..but since it's just a string[], we can search for it more efficiently using Array.indexOf
       var i = faves.indexOf(this.videoId);
