@@ -2,6 +2,7 @@
 
 body {
   font: .8em Arial, Helvetica, sans-serif;
+  min-width: 330px;
 }
 
 .error {
@@ -19,6 +20,10 @@ body {
 
 .pre {
   white-space: pre-wrap;
+}
+
+.ztop {
+  z-index: 999;
 }
 
 a:hover {
@@ -52,6 +57,7 @@ dd {
   padding: .3em;
   border-radius: 4px;
   min-height: 80px;
+  border: 1px solid#AAA;
 }
 .video-list li.selected:hover {
   background-color: #BBD8DC !important;
@@ -82,18 +88,20 @@ dd {
     border: 1px solid;
 }
 
-
-footer .nav {
-  width:100%;
-  padding:3px;
-  font-size: 16px;
-  font-weight: bold;
+footer {
   position:fixed;
-  height:20px;
+  width:100%;
   bottom:0;
   left:0;
   background: rgba(240,240,240,0.8);
   border-top: 1px solid;
+  padding:3px;
+  font-size: 16px;
+}
+
+footer .nav {
+  font-weight: bold;
+  height:20px;
 }
 
 footer .nav #back, footer .nav #forward { 

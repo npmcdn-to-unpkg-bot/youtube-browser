@@ -121,6 +121,44 @@ export class FavoritesComponent {
       window.localStorage.removeItem('faves');
       this.faves = [];
       alert('Favorites cleared');
+      this.videos = [];
+    }
+  }
+  
+  /* Removes a video as a favorite */
+  removeFavorite(videoId:string) {
+    if (Constants.DEBUG) console.log('Removing video ' + videoId);
+    
+    //find the video in the array
+    var video = this.videos.find(item => item.videoId === videoId);
+    
+    if (Constants.DEBUG) console.log(video);
+    
+    //if the video was not found, something's not right
+    if (!video) { 
+      this._displayError('An error occurred. Please refresh the page'); 
+    }
+    
+    if (video && confirm('Are you sure you want to remove \'' + video.title + '\' from your favorites?')) {
+      //retrieve the faves saved in the browser's local storage
+      var faves = window.localStorage.getItem('faves') ? JSON.parse(window.localStorage.getItem('faves')) : [];
+      
+      //find the index of the video in the faves array
+      var i = faves.indexOf(videoId);
+        
+      if (Constants.DEBUG) console.log ('Found at location ' + i);
+      
+      //if the video is found in the array, remove it
+      if (i !== -1) {
+        //remove it using Array.splice()
+        faves.splice(i, 1);
+      }
+      
+      //replace 'faves' variable in the browser's local storage with the local array
+      window.localStorage.setItem('faves', JSON.stringify(faves));
+      
+      //finally, remove it from the local videos array, as well--this will cause the list to refresh
+      this.videos.splice(i, 1);
     }
   }
 }

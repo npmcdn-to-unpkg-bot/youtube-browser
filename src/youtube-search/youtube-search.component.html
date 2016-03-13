@@ -12,7 +12,7 @@
       <input id="location" type="text" placeholder="lat,long"
         [(ngModel)]="geolocation" (keyup.enter)="performSearch()" />
       <span class="success" *ngIf="isValidLocation()">&#x2713;</span>
-      <span class="error" *ngIf="geolocation !== '' && !isValidLocation()">&#x2716; Invalid Coordinates for Earth</span>
+      <span class="error" *ngIf="geolocation !== '' && !isValidLocation()"><br>&#x2716; Invalid Coordinates for Earth</span>
       <br>
       <button id="my-location" (click)="getLocation()">Use my current location</button>
     </dd>
@@ -22,7 +22,7 @@
         [(ngModel)]="radius" (keyup.enter)="performSearch()" />
       <!--Show a "required" message if the value is blank and the location is not blank (but still considered valid) and contains a valid lat/long tuple-->
       <span class="success" *ngIf="isValidRadius()">&#x2713;</span>
-      <span class="error" *ngIf="radius === '' && isValidLocation()">&#x2716; Required with location</span>
+      <span class="error" *ngIf="radius === '' && isValidLocation()"><br>&#x2716; Required with location</span>
       <span class="error" *ngIf="geolocation !== '' && radius !== '' && !isValidRadius()">&#x2716; Invalid</span>
     </dd>
     <dt><label for="order">Sort by:</label></dt>

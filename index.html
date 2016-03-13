@@ -12,9 +12,9 @@
     <script src="https://apis.google.com/js/client.js"></script>
     
     <!-- IE required polyfills (in this exact order) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-shim/0.33.3/es6-shim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/systemjs/0.19.20/system-polyfills.js"></script>
-    <script src="https://npmcdn.com/angular2@2.0.0-beta.8/es6/dev/src/testing/shims_for_IE.js"></script>
+    <script src="node_modules/es6-shim/es6-shim.min.js"></script>
+    <script src="node_modules/systemjs/dist/system-polyfills.js"></script>
+    <script src="node_modules/angular2/es6/prod/src/testing/shims_for_IE.js"></script>
     
     <!-- Angular 2 polyfills -->
     <script src="node_modules/angular2/bundles/angular2-polyfills.js"></script>
@@ -28,7 +28,7 @@
     <script src="node_modules/rxjs/bundles/Rx.js"></script>
     <!--<script src="https://code.angularjs.org/2.0.0-beta.8/Rx.js"></script>-->
     
-    <!-- Load TypeScript library -->
+    <!-- [Dev] Load TypeScript library -->
     <script src="node_modules/typescript/lib/typescript.js"></script>
     <!--<script src="https://npmcdn.com/typescript@1.8.2/lib/typescript.js"></script>-->
     
@@ -38,6 +38,7 @@
     
     <!-- [Prod] Angular 2 -->
     <!--<script src="node_modules/angular2/bundles/angular2.min.js"></script>-->
+    <!--<script src="https://code.angularjs.org/2.0.0-beta.8/angular2.min.js"></script>-->
     
     <!-- [Dev] Angular 2 Router library -->
     <script src="node_modules/angular2/bundles/router.dev.js"></script>
@@ -49,7 +50,7 @@
     
     <!-- Load application with SystemJS -->
     <script>
-      var DEBUG = true;
+      var DEBUG = false;
     
       //use transpiler in DEBUG mode
       if (DEBUG) {
