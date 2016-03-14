@@ -8,11 +8,20 @@
     [class.selected]="video === selectedVideo"
     (click)="onSelect(video)">
     <a class="right ztop" title="Remove from Favorites" (click)="removeFavorite(video.videoId);$event.stopPropagation()">&#x2716;</a>
-    <img src="{{video.thumbnails.medium.url}}" class="thumbnail">
+    <div class="thumbnail">
+      <img src="{{video.thumbnails.medium.url}}">
+    </div>
+    <small></small>
     <div class="info">
       <h4>{{video.title}}</h4>
+      <small>{{video.channelTitle}}</small>
+      <br><br>
       <span class="description pre" [innerHTML]="video.description"></span>
     </div>
   </li>
 </ul>
-<small><a *ngIf="faves?.length !== 0" (click)="clear()">Clear Favorites</a></small>
+<footer>
+    <div class="nav">
+      <small><a *ngIf="faves?.length !== 0" (click)="clear()">&#x2716; Clear Favorites</a></small>
+    </div>
+</footer>

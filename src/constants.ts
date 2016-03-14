@@ -1,10 +1,10 @@
 export class Constants {
   
   //enable/disable DEBUG mode (extra logging)
-  public static DEBUG:boolean = false;
+  public static DEBUG:boolean = true;
   
   //Application title to show in header
-  public static APP_TITLE:string = 'YouTube Browser';
+  public static APP_TITLE:string = 'Another YouTube Browser';
   
   //Google Browser API Key
   public static API_KEY:string = 'AIzaSyBIN5pEfYIU-IULSw121ojZ9xxf8RShFBA';

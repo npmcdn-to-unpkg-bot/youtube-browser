@@ -69,15 +69,20 @@ dd {
   background-color: #CFD8DC !important;
   color: white;
 }
-.video-list img.thumbnail {
+.video-list .thumbnail {
   position:absolute;
   width: 110px;
   border-radius: 2px;
   padding:4px;
 }
+.video-list .thumbnail img {
+  width: 110px;
+}
+.video-list h4 {
+  margin: 0;
+}
 .video-list div.info {
   margin-left: 120px;
-  margin-top: -10px;
 }
 
 

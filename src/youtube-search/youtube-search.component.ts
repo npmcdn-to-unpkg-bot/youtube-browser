@@ -97,15 +97,15 @@ export class YouTubeSearchComponent {
           //create a new YouTubeVideo
           var r:YouTubeVideo = {
             videoId : result.id.videoId,
-            //etag : result.etag,
-            //channelId : result.snippet.channelId,
-            //channelTitle : result.snippet.channelTitle, 
+            etag : result.etag,
+            channelId : result.snippet.channelId,
+            channelTitle : result.snippet.channelTitle, 
             title : result.snippet.title,
             description : result.snippet.description,
-            //timestamp : result.snippet.publishedAt,
+            timestamp : result.snippet.publishedAt,
             thumbnails : {
             //  high : { 
-            //    height:(result.snippet.thumbnails.high.height), 
+            ///    height:(result.snippet.thumbnails.high.height), 
             //    width:(result.snippet.thumbnails.high.width), 
             //    url:(result.snippet.thumbnails.high.url) 
             //  },
